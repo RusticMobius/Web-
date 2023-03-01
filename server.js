@@ -1,16 +1,17 @@
-const {User}=require('./models')
-const jwt = require('jsonwebtoken')
+const {User}=require('./schema')
 const express = require('express')
+
+
+const JWT = require('./JWT')
 
 
 const app = express()
 app.use(express.json())
-app.use(express.static('frontend'));
+app.use(express.static('src'));
 
-const SECRET = 'wxy'
 
-var bodyParser = require('body-parser')
-var path = require('path');
+let bodyParser = require('body-parser')
+let path = require('path');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -20,27 +21,36 @@ app.get('/api/users',async(req, res) =>{
 })
 
 app.post('/api/register',async(req, res) => {
+    console.log("reqbody:")
     console.log(req.body)
-    const userInDB =  await User.findOne({
-        username:req.body.username
-    })
-    if (userInDB){
+    try{
+      const userInDB =  await User.findOne({
+        email :req.body.email
+      })
+      if (userInDB){
         res.send({
-            msg:'用户名已存在'
+          msg:'该邮箱已被注册'
         })
-    }
-    const user = await User.create({
-        username: req.body.username,
+      }
+      const user = await User.create({
+        email: req.body.email,
+        phone: req.body.phone,
         password: req.body.password,
-    })
-    return res.send({
+      })
+
+      return res.send({
         msg:'注册成功'
-    })
+      })
+
+    } catch (e){
+      console.log(e)
+    }
+
 })
 
 app.post('/api/login',async(req, res) => {
     const user = await User.findOne({
-        username: req.body.username
+        email : req.body.email
     })
     if(!user){
         return res.send({
@@ -55,23 +65,16 @@ app.post('/api/login',async(req, res) => {
         })
     }
     //生成token
-    const jwt = require('jsonwebtoken')
-    const token = jwt.sign({
+    const token = JWT.generate({
         id: String(user._id),
-    }, SECRET)
+        email: String(user.email),
+    }, "10s")
+    // console.log(token)
+    res.header("Authorization", token)
     res.send({user, msg:'登录成功', token})
 })
 
-const auth = async(req,res,next)=>{
-    const raw = String(req.headers.authorization).split(' ').pop()
-    const {id} = jwt.verify(raw, SECRET)
-    req.user = await User.findById(id)
-    next()
-}
 
-app.get('/api/profile', auth, async (req, res) =>{
-    res.send(req.user)
-})
 
 app.listen(3003,() => {
     console.log('http://localhost:3003/html/login.html')

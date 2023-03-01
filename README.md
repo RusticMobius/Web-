@@ -1,70 +1,150 @@
-# Getting Started with Create React App
+# Readme
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Work-5 
 
-## Available Scripts
+### 功能主题——图片风格迁移
 
-In the project directory, you can run:
+#### 贺思嘉 181250044
 
-### `npm start`
+### 1. 安装与启动
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- npm i 安装 package.json dependencies里的库（提交项目里**不包括node_modules文件夹**）
+- 启动mongodb，建立对应数据库hw5，启动mongoose服务
+- sudo npm i -g nodemon
+- 终端输⼊nodemon server.js启动服务端
+- 进入登陆页面后可进行注册登陆并访问主页
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2. 实现
 
-### `npm test`
+本项目选择图片风格迁移功能作为主题，通过**Tensorflow.Js**实现功能，在图片详情页面添加了风格迁移实现工具，项目提供了部分风格图片供用户选择，也支持用户上传自己的图片对网页内的图片进行风格迁移操作
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 引入tensorflow.js
 
-### `npm run build`
+  ```html
+  <head>
+    <meta charset="UTF-8">
+    <title>DEMO</title>
+    <link rel="stylesheet" href="../styles/demo_style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- transformer.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  - 考虑到结合已有项目添加智能化功能，网页需要较快的加载与响应速度，本项目选择了使用较小的模型实现风格迁移
 
-### `npm run eject`
+    - 模型文件
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+      <img src="https://raw.githubusercontent.com/RusticMobius/MyPicGo/main/%E6%88%AA%E5%B1%8F2023-01-05%2022.29.45.png" alt="截屏2023-01-05 22.29.45" style="zoom:50%;" />
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    - 模型加载
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+      ```javascript
+      async function loadMobileNetStyleModel() {
+      
+        let mobileStyleNet = await tf.loadGraphModel(
+          '../model/saved_model_style_js/model.json'
+        );
+        console.log('loading model')
+        return mobileStyleNet;
+      }
+      
+      async function loadSeparableTransformerModel() {
+      
+        this.originalTransformNet = await tf.loadGraphModel(
+          '../model/saved_model_transformer_separable_js/model.json'
+        );
+      
+        return this.originalTransformNet;
+      }
+      ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    
+    
+  - 风格迁移
+  
+    ```js
+    async function startStyling() {
+      await tf.nextFrame();
+      stylizeButton.value = 'Generating 100D representation';
+      await tf.nextFrame();
+      let bottleneck = await tf.tidy(() => {
+        return styleModel.predict(tf.browser.fromPixels(sImg).toFloat().div(tf.scalar(255)).expandDims());
+      })
+      stylizeButton.value = 'Stylizing image...';
+      await tf.nextFrame();
+      const stylized = await tf.tidy(() => {
+        return transformModel.predict([tf.browser.fromPixels(cImg).toFloat().div(tf.scalar(255)).expandDims(), bottleneck]).squeeze();
+      })
+      await tf.browser.toPixels(stylized, canvas);
+      bottleneck.dispose();  // Might wanna keep this around
+      stylized.dispose();
+    }
+    ```
+  
+    
+  
 
-## Learn More
+### 3. 界面截图
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+文档内仅展示风格迁移相关界面，其他界面相较上一次作业未做改动
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 主页 gallery.html
 
-### Code Splitting
+  <img src="https://raw.githubusercontent.com/RusticMobius/MyPicGo/main/%E6%88%AA%E5%B1%8F2023-01-05%2022.38.37.png" alt="截屏2023-01-05 22.38.37" style="zoom:50%;" />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  
 
-### Analyzing the Bundle Size
+- 详情页 demo.html
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+  - 页面
 
-### Making a Progressive Web App
+    <img src="https://raw.githubusercontent.com/RusticMobius/MyPicGo/main/%E6%88%AA%E5%B1%8F2023-01-05%2022.39.45.png" alt="截屏2023-01-05 22.39.45" style="zoom:50%;" />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+    
 
-### Advanced Configuration
+  - 项目提供的可选风格图片示例
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+    <img src="https://raw.githubusercontent.com/RusticMobius/MyPicGo/main/%E6%88%AA%E5%B1%8F2023-01-05%2022.40.25.png" alt="截屏2023-01-05 22.40.25" style="zoom: 50%;" />
 
-### Deployment
+    
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+    <img src="/Users/scarlett/Desktop/截屏2023-01-05 22.41.53.png" alt="截屏2023-01-05 22.41.53" style="zoom: 50%;" />
+  
+    
+  
+    <img src="https://raw.githubusercontent.com/RusticMobius/MyPicGo/main/%E6%88%AA%E5%B1%8F2023-01-05%2022.42.06.png" alt="截屏2023-01-05 22.42.06" style="zoom: 50%;" />
+  
+  - 上传风格图片
+  
+    <img src="https://raw.githubusercontent.com/RusticMobius/MyPicGo/main/%E6%88%AA%E5%B1%8F2023-01-05%2022.43.29.png" alt="截屏2023-01-05 22.43.29" style="zoom:50%;" />
+  
+     
+  
+    <img src="https://raw.githubusercontent.com/RusticMobius/MyPicGo/main/%E6%88%AA%E5%B1%8F2023-01-05%2022.43.41.png" alt="截屏2023-01-05 22.43.41" style="zoom:67%;" />
+  
+  - 风格迁移
+  
+    <img src="https://raw.githubusercontent.com/RusticMobius/MyPicGo/main/%E6%88%AA%E5%B1%8F2023-01-05%2022.45.24.png" alt="截屏2023-01-05 22.45.24" style="zoom:50%;" />
+  
+    
+  
+    
+  
+    <img src="https://raw.githubusercontent.com/RusticMobius/MyPicGo/main/%E6%88%AA%E5%B1%8F2023-01-05%2022.46.52.png" alt="截屏2023-01-05 22.46.52" style="zoom:50%;" />
+  
+    
+  
+    
+  
+    <img src="https://raw.githubusercontent.com/RusticMobius/MyPicGo/main/%E6%88%AA%E5%B1%8F2023-01-05%2022.47.57.png" alt="截屏2023-01-05 22.47.57" style="zoom:50%;" />	
+  
+    
 
-### `npm run build` fails to minify
+### 4. 参考
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- https://codelabs.developers.google.com/codelabs/tensorflowjs-teachablemachine-codelab/index.html?hl=zh-cn#0
+- https://www.tensorflow.org/js/tutorials?hl=zh-cn
+- https://github.com/reiinakano/arbitrary-image-stylization-tfjs

@@ -55,6 +55,8 @@ body{
 }
 
 
+
+
 #link-theme{
   float: left;
   margin-left: 50px;
@@ -96,7 +98,7 @@ body{
 .menu{
   float: left;
   width: 30%;
-  height: 800px;
+  height: 1000px;
   box-shadow: 15px 15px 5px 5px rgba(188, 188, 188, 0.1);
   margin-right: 50px;
 }
@@ -131,7 +133,7 @@ body{
   text-align: center;
 }
 
-.menu #submit{
+.menu #stylize{
   border: none;
   outline: none;
   background: #22c1c3;
@@ -143,25 +145,12 @@ body{
   letter-spacing: 1px;
 }
 
-.menu #submit:hover{
+.menu #stylize:hover{
   background: #25ced0;
 }
 
-
-.menu #dct-encrypt{
-  border: none;
-  outline: none;
-  background: #ffb219;
-  color: white;
-  padding: 1rem 2rem;
-  border-radius: 100px;
-  width: 360px;
-  font-size: 1rem;
-  letter-spacing: 1px;
-}
-
-.menu #dct-encrypt:hover{
-  background: #ffc430;
+.menu #stylize:disabled{
+  background: #a4e5e5;
 }
 
 .menu #svg-encrypt{
@@ -178,6 +167,12 @@ body{
 
 .menu #svg-encrypt:hover{
   background: #5db3ff;
+}
+
+.menu img{
+  display: inline;
+  width: 360px;
+  height: auto;
 }
 
 .menu #select-style-img{

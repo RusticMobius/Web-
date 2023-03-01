@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gallery</title>
+  <link id="theme-link" rel="stylesheet" href="../styles/gallery_style_autumn.css">
+  <script src="../js/theme_config.js"></script>
+</head>
+
+<body>
+
+
+<div class="gallery-card">
+
+
+  <div id="link-theme">
+    <a onclick="changeTheme()">
+      <h2>Change Theme</h2>
+    </a>
+  </div>
+
+  <div id="link-login">
+    <h2 id="header-account-text">Vistor | </h2>
+    <a onclick="logOut()" >
+      <h2 id="log-opt">Log Out</h2>
+    </a>
+
+  </div>
+
+  <div class="gallery-header" >
+    <h1>Winter Gallery</h1>
+
+    <div id="link-tool">
+      <a href="encryption.html">
+        <h2>Encryption Tool</h2>
+      </a>
+    </div>
+
+    <!--    <hr class="hr-edge-weak">-->
+  </div>
+
+</div>
+
+  <div class="gallery" id="gallery">
+  </div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+
+  let t = getTheme()
+  console.log("getTheme:",t)
+  let link = document.getElementById("theme-link")
+  link.href = "../styles/gallery_style_" + t + ".css"
+  console.log(link.href)
+
+  function changeTheme() {
+    if (t==="winter"){
+      t = "autumn"
+    }else{
+      t = "winter"
+    }
+    setTheme(t)
+    console.log("setTheme:",t)
+    link.href = "../styles/gallery_style_" + t + ".css"
+  }
+  const imgList = [
+    "../res/img/6e8aa31b15335ccf66333675d1bb245e.jpeg",
+    "../res/img/50b85d42aa6a7e5a230150e136870626.jpeg",
+    "../res/img/65aa30c3f2fe3650b6b71c57222d5f1d.jpeg",
+    "../res/img/4a3de808bc53b4b4e38a54eea5006b83.jpeg",
+    "../res/img/0527471ade627dfd8973301bf62d4627.jpeg",
+    "../res/img/d46bd48267bbc98a00be117c7e4ce7cb.jpeg",
+
+    "../res/img/pexels-jasmin-chew-5635233.jpg",
+    "../res/img/boat.jpeg",
+    "../res/img/pexels-beyza-7453477.jpg",
+
+    "../res/img/pexels-cole-keister-3081750.jpg"
+  ]
+  console.log(imgList.length)
+
+  window.onload = function () {
+    let gallery_root = document.getElementById("gallery")
+    let fragment = document.createDocumentFragment()
+    for(let i = 0; i < imgList.length; i++){
+      let div = document.createElement("div")
+      div.className = "g-item"
+
+      // let a = document.createElement("a")
+      // a.href = "../html/demo/demo.html"
+      //
+
+      let img = document.createElement("img")
+      img.src = imgList[i]
+
+
+      // a.appendChild(img)
+
+      div.appendChild(img)
+
+      div.onclick = function () {
+        document.location.href ='http://localhost:3003/html/demo.html?imgSrc=' + imgList[i]
+        // document.location.href ='http://localhost:3003/html/demo_dct.html?imgSrc=' + imgList[i]
+      }
+      fragment.appendChild(div)
+    }
+
+    gallery_root.appendChild(fragment)
+  }
+
+
+</script>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <link id="theme-link" rel="stylesheet" href="../styles/register_style_winter.css">
+  <script src="../js/theme_config.js"></script>
+</head>
+<body>
+
+  <div class="register-card-container">
+
+    <div class="register-card">
+
+      <div class="register-card-header">
+        <h1>REGISTER</h1>
+        <a onclick="changeTheme()">Change Theme</a>
+      </div>
+
+      <form class="register-card-form">
+
+        <div class="form-item">
+          <label for="phone" class="normal-label">Phone</label>
+          <input type="tel" id="phone" placeholder="Enter your mobile number" required autofocus>
+        </div>
+
+        <div class="form-item">
+          <label for="email" class="normal-label">Email</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-item">
+          <label for="password" class="normal-label">Password</label>
+          <input type="password" id="password" placeholder="Enter password" required oninput="passwordChange()"
+                 minlength="8"
+                 maxlength="16" size="16">
+          <div class="password-input-hint-container" id="pwd-input-hint" >
+            <span class="password-input-hint" id="pwd-input-hint-text">Password length should be 8 ~ 16</span>
+          </div>
+<!--          使用meter标签-->
+          <div class="password-strength-container" id="pwd-strength-hint">
+            <span class="password-strength-hint" id="strength-hint-text" >password is weak</span>
+            <meter min="0" max="12" low="4" high="8" optimum="10" value="0" id="strength-meter"></meter>
+          </div>
+        </div>
+
+        <div class="form-item">
+          <input type="password" id="re-password" placeholder="Enter password again" required>
+        </div>
+
+        <div class="form-item">
+          <input type="submit" value="Register" id="submit">
+        </div>
+
+      </form>
+      <div class="register-card-footer">
+        Have an Account?
+        <a href="../html/login.html">Sign In</a>
+      </div>
+
+      <hr class="hr-edge-weak">
+      <div class="social-guideline">
+        <span>Login via other social accounts</span>
+      </div>
+      <div class="social-icon-container">
+        <a href="#" class="social-icon"><i class="iconfont icon-qq"></i></a>
+        <a href="#" class="social-icon"><i class="iconfont icon-weixin"></i></a>
+        <a href="#" class="social-icon"><i class="iconfont icon-github"></i></a>
+      </div>
+    </div>
+
+  </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="../js/register.js"></script>
+
+<script>
+  let pwd = document.getElementById("password")
+  let pwd_input_hint = document.getElementById("pwd-input-hint")
+  let pwd_input_hint_text = document.getElementById("pwd-input-hint-text")
+  let pwd_strength_hint = document.getElementById("pwd-strength-hint")
+  let t = getTheme()
+  console.log("getTheme:",t)
+  let link = document.getElementById("theme-link")
+  link.href = "../styles/register_style_" + t + ".css"
+  console.log(link.href)
+
+  function changeTheme() {
+    if (t==="winter"){
+      t = "autumn"
+    }else{
+      t = "winter"
+    }
+    setTheme(t)
+    // console.log("setTheme:",t)
+    // console.log("cookie",document.cookie)
+    link.href = "../styles/register_style_" + t + ".css"
+  }
+  // 至少一个大写字母一个小写字母一个数字
+  const regexMiddle_1 = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+  // 至少一个字母一个数字一个特殊字符
+  const regexMiddle_2 = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
+
+  // 只有数字字母
+  const regexLow = /^[A-Za-z0-9]+$/g
+  // 至少一个大写字符，一个小写字符，一个特殊字符，一个数字
+  const regexHigh = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/
+
+  let strength_hint_text = document.getElementById("strength-hint-text")
+  let strength_meter = document.getElementById("strength-meter")
+
+  function passwordChange(){
+    let passwordValue = pwd.value
+    console.log(passwordValue)
+    // console.log(regexHigh.test(passwordValue),regexMiddle.test(passwordValue))
+    if(passwordValue.length >= 8){
+      pwd_input_hint.style.display = 'none'
+      pwd_strength_hint.style.display = 'inline'
+
+      if(regexHigh.test(passwordValue)){
+        console.log("high")
+        if(passwordValue.length < 12){
+          strength_hint_text.innerText = 'Password is STRONG'
+          strength_hint_text.style.color = '#22c3a3'
+          strength_meter.value = passwordValue.length
+        }else{
+          strength_hint_text.innerText = 'Password is SECURE'
+          strength_hint_text.style.color = '#22c3a3'
+          strength_meter.value = 12
+        }
+      }else if(regexMiddle_1.test(passwordValue)||regexMiddle_2.test(passwordValue)){
+        console.log("average")
+        strength_hint_text.innerText = 'Password is AVERAGE'
+        strength_hint_text.style.color = '#ffb219'
+        strength_meter.value = 7
+      }else{
+        console.log("low")
+        strength_hint_text.innerText = 'Password is WEAK'
+        strength_hint_text.style.color = '#FF7F50'
+        strength_meter.value = 3
+      }
+
+    }else{
+      pwd_input_hint.style.display = 'inline'
+      pwd_strength_hint.style.display = 'none'
+    }
+  }
+
+</script>
+
+</html>

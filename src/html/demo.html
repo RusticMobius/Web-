@@ -5,7 +5,7 @@
   <title>DEMO</title>
   <link rel="stylesheet" href="../styles/demo_style.css">
   <script src="../js/cryptostego.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
 </head>
 <body>
 
@@ -24,7 +24,7 @@
   </div>
 
   <div class="pic-header">
-    <h1>Autumn Picture</h1>
+    <h1>Custom Gallery</h1>
   </div>
 
 </div>
@@ -37,35 +37,39 @@
     <form class="menu-form">
 
       <div class="menu-item">
-        <input type="file" id="file" accept="image/*"/>
+        <input type="file" id="file" accept="image/x-png,image/gif,image/jpeg"/>
       </div>
 
 <!--      <div class="menu-item">-->
 <!--        <h3>DCT watermark</h3>-->
 <!--      </div>-->
-
       <div class="menu-item">
-        <input type="button" id="submit" value="Select an image file" onclick="submitFile()">
+        <img src="../res/style_images/lady.jpg" id="sImg">
       </div>
       <div class="menu-item">
+        <h4>Click to choose a style image</h4>
         <select id="select-style-img">
           <option value="" disabled>Select a style</option>
           <option value="file">Select from file</option>
-          <option value="random">Random image from wikiart.org</option>
           <option value="udnie">udnie</option>
-          <option value="stripes">stripes</option>
-          <option value="bricks">bricks</option>
+          <option value="lines">lines</option>
+          <option value="starry_night">starry night</option>
           <option value="clouds">clouds</option>
-          <option value="towers">towers</option>
           <option value="sketch">sketch</option>
-          <option value="seaport" selected="selected">seaport</option>
-          <option value="red_circles">red_circles</option>
-          <option value="zigzag">zigzag</option>
+          <option value="seaport">seaport (default style)</option>
+          <option value="building">building</option>
+          <option value="cry">cry</option>
+          <option value="lady" selected="selected">lady</option>
+          <option value="picasso">Picasso</option>
+          <option value="sunrise">sunrise</option>
+          <option value="roundabout">roundabout</option>
+          <option value="twilight">twilight</option>
+          <option value="winter">winter</option>
+          <option value="local" disabled id="local-style-img-opt"></option>
         </select>
       </div>
-
       <div class="menu-item">
-        <input type="button" id="svg-encrypt" value="Stylize" onclick="createSVGwatermark()">
+        <input type="button" id="stylize" value="Loading Model..." disabled>
       </div>
     </form>
   </div>
@@ -75,7 +79,7 @@
     <div class="watermark-container">
           <div class="watermark-layer" style="background-image: var(--watermarksvg);"></div>
       <div class="pic">
-        <img id="img" src="" onload="createSVGmark()">
+        <img id="cImg" src="">
       </div>
 
     </div>
@@ -86,8 +90,11 @@
     <div class="watermark-container">
           <div class="watermark-layer" style="background-image: var(--watermarksvg);"></div>
       <div class="pic">
-        <canvas id="hiddenCanvas" style="height:800px;width: 1200px;display: none"></canvas>
-        <img id="tImg" src="../res/img/pexels-irina-iriser-1379640.jpg">
+        <canvas id="styleCanvas"></canvas>
+        <div class="preload-container" id="guideline">
+<!--          <h1> Start Stylize Now !</h1>-->
+          <img id="pImg" src="../res/paint.jpg">
+        </div>
       </div>
 
     </div>
@@ -100,7 +107,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="../js/admin.js"></script>
 
-<script type="module" src="../../transformer.js"></script>
+<script src="../js/transformer.js"></script>
 <script>
 
   let svgText = "He Sijia 181250044"
@@ -112,11 +119,11 @@
 
 
   let tImg = document.getElementById("tImg")
-  let img = document.getElementById("img")
+  let img = document.getElementById("cImg")
 
   window.onload = function (){
-    // let imgSrc = getImgSrc()
-    let imgSrc = '../res/img/pexels-jasmin-chew-5635233.jpg'
+    let imgSrc = getImgSrc()
+    // let imgSrc = '../res/img/pexels-jasmin-chew-5635233.jpg'
     img.setAttribute("src",imgSrc)
 
   }

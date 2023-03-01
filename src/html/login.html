@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link id="theme-link" rel="stylesheet" href="../styles/login_style_winter.css">
+  <script src="../js/theme_config.js"></script>
+
+</head>
+<body>
+
+  <div class="guide-line-container">
+
+    <div class="guide-line-header">
+      <h1>Home Work 4</h1>
+      <h2>Welcome to my Gallery</h2>
+    </div>
+
+  </div>
+
+  <div class ="login-card-container">
+
+    <div class="login-card">
+      <div class="login-card-header">
+        <h1>SIGN IN</h1>
+        <a onclick="changeTheme()">Change Theme</a>
+      </div>
+      <form class="login-card-form">
+        <div class="form-item">
+          <label for="id" class="normal-label">Account</label>
+            <input type="text" id="id" name="id" placeholder="Enter mobile number or email" required autofocus>
+        </div>
+
+        <div class="form-item">
+          <label for="password" class="normal-label">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter password" required>
+        </div>
+
+        <div class="form-item-other">
+          <div>
+            <label for="validate" class="normal-label">Verification Code</label>
+            <input type="text" id="validate" required>
+          </div>
+          <canvas width="160px" height="60px" id="validate-pic" onclick="generateVerificationCode()"></canvas>
+        </div>
+
+        <div class="form-item-other">
+          <div class="checkbox">
+            <input type="checkbox" id="rememberPasswordCheckbox">
+            <label for="rememberPasswordCheckbox">Remember Me</label>
+          </div>
+          <a href="#">I forgot my password</a>
+        </div>
+
+        <div class="form-item">
+          <input type="submit" id="submit" value="Sign In">
+        </div>
+
+      </form>
+
+<!--      <a class="button-link" href="../html/gallery.html">-->
+<!--        <button type="submit">Sign In</button>-->
+<!--      </a>-->
+
+      <div class="login-card-footer">
+        Don't have an account?
+        <a href="../html/register.html">Create One</a>
+      </div>
+      <hr class="hr-edge-weak">
+      <div class="social-guideline">
+        <span>Login via other social accounts</span>
+      </div>
+      <div class="social-icon-container">
+        <a href="#" class="social-icon"><i class="iconfont icon-qq"></i></a>
+        <a href="#" class="social-icon"><i class="iconfont icon-weixin"></i></a>
+        <a href="#" class="social-icon"><i class="iconfont icon-github"></i></a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="../js/login.js"></script>
+
+<script>
+  let t = getTheme()
+  console.log("getTheme:",t)
+  let link = document.getElementById("theme-link")
+  link.href = "../styles/login_style_" + t + ".css"
+  console.log(link.href)
+
+  function changeTheme() {
+    if (t==="winter"){
+      t = "autumn"
+    }else{
+      t = "winter"
+    }
+    setTheme(t)
+    console.log("setTheme:",t)
+    link.href = "../styles/login_style_" + t + ".css"
+  }
+</script>
+</html>
+
+
