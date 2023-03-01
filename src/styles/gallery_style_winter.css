@@ -1,0 +1,73 @@
+body{
+  margin: 4px;
+}
+
+.gallery-card{
+  background-image: url("../res/background_winter.jpg");
+  background-size: cover;
+  margin-bottom: 30px;
+}
+.gallery-header{
+  clear: left;
+  text-align: center;
+}
+
+.gallery-header h1{
+  font-family: sans-serif;
+  color: #515151;
+  font-size: 5rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+#link-theme{
+
+  float: left;
+  margin-left: 50px;
+}
+#link-login{
+  margin-top: 20px;
+  float: right;
+  margin-right: 50px;
+}
+
+#link-login, #link-theme, #link-tool{
+  padding: 20px;
+}
+
+.gallery-card a{
+  text-decoration: none;
+  color: #453651;
+}
+
+.gallery-card a:hover{
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+#link-login h2{
+  display: inline;
+}
+#header-account-text{
+  color: #453651;
+}
+.gallery{
+  column-count: 4;
+  column-gap: 8px;
+}
+
+.g-item{
+  padding: 20px;
+}
+
+.g-item img{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hr-edge-weak {
+  border: 0;
+  padding-top: 1px;
+  background: linear-gradient(to right, transparent, #919194, transparent);
+}

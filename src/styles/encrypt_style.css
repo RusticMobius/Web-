@@ -1,0 +1,162 @@
+body{
+  margin: 4px;
+  height: 100vh;
+  width: 100vw;
+}
+
+.pic-header{
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+
+.watermark-container {
+  float: left;
+  width: 70%;
+}
+
+.watermark-container .watermark-layer{
+  position: absolute;
+  margin:0 auto;
+  width: 95%;
+  /*height: 100%;*/
+  z-index: 100;
+  pointer-events: none; // 对鼠标穿透
+}
+
+.watermark-container .pic{
+  position: absolute;
+  margin:0 auto;
+
+}
+
+
+.watermark-container img{
+  display: block;
+  /*left:0;*/
+  /*right:0;*/
+  /*margin: 0 auto;*/
+  height: auto;
+  width:95%
+}
+
+.pic-header h1{
+  font-family: sans-serif;
+  color: #515151;
+  font-size: 5rem;
+  letter-spacing: 2px;
+}
+
+.hr-edge-weak {
+  border: 0;
+  padding-top: 1px;
+  background: linear-gradient(to right, transparent, #919194, transparent);
+}
+
+
+.menu{
+  float: left;
+  width: 20%;
+  height: 800px;
+  box-shadow: 15px 15px 5px 5px rgba(188, 188, 188, 0.2);
+  margin-right: 50px;
+}
+
+.menu-form{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.menu-item{
+  position: relative;
+  align-self: center;
+}
+
+.menu input[type='file']{
+  display: none;
+}
+
+.menu-header{
+  text-align: center;
+}
+
+.menu-header h1{
+  font-size: 2rem;
+  font-weight: 600;
+  color:#515151;
+  margin-bottom: .5rem;
+}
+
+.menu-item{
+  text-align: center;
+}
+
+.menu #submit{
+  border: none;
+  outline: none;
+  background: #22c1c3;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  width: 360px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.menu #submit:hover{
+  background: #25ced0;
+}
+
+
+.menu #dct-encrypt{
+  border: none;
+  outline: none;
+  background: #ffb219;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  width: 360px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.menu #dct-encrypt:hover{
+  background: #ffc430;
+}
+
+.menu #svg-encrypt{
+  border: none;
+  outline: none;
+  background: #5699ff;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  width: 360px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.menu #svg-encrypt:hover{
+  background: #5db3ff;
+}
+
+.menu #select{
+  /*border: wave 5px;*/
+  outline: none;
+  background: #6f62d4;
+  color:white;
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  width: 360px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+}
+
+.menu #select:hover{
+  background: #8673ff;
+}

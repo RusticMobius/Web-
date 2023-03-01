@@ -1,0 +1,200 @@
+body{
+  font-family: sans-serif;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../res/background_winter.jpg");
+  background-size: cover;
+  display: flex;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card-container{
+  align-self: center;
+}
+
+.register-card{
+  width: 450px;
+  height: 760px;
+  background: rgba(255, 255, 255,.4);
+  border-radius: 10px;
+  position: relative;
+}
+
+.register-card::before{
+  content: '';
+  position: absolute;
+  background:rgba(255, 255, 255,.15);
+  inset: 0;
+  transform: rotate(-6deg);
+  z-index: -1;
+}
+
+.register-card-header,
+.register-card-footer{
+  text-align: center;
+}
+
+.register-card a{
+  text-decoration: none;
+  color: #4436e0;
+}
+
+.register-card a:hover{
+  text-decoration: underline;
+}
+
+.register-card-header{
+  padding-top: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.register-card-header h1{
+  font-size: 3rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: .5rem;
+}
+
+.register-card-form{
+  display: flex;
+  flex-direction: column;
+  /*gap: 1.5rem;*/
+}
+
+.register-card-form .form-item{
+  position: relative;
+  align-self: center;
+}
+
+.register-card input[type="tel"],
+.register-card input[type="password"],
+.register-card input[type="email"]{
+  display: flex;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,.3);
+  padding: 1rem 1rem;
+  border-radius: 100px;
+  width: 320px;
+  font-size: 1rem;
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+
+.register-card input[type="submit"]{
+  border: none;
+  outline: none;
+  background: #7364fa;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  width: 360px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.register-card input[type="submit"]:hover{
+  background: #5646ef;
+}
+
+.register-card .register-card-footer{
+  margin-top: 8px;
+  margin-bottom: 16px;
+  color: #454444;
+}
+
+.register-card input[type='text'],
+.register-card input[type='password']:focus{
+  background: rgba(255,255,255,.8);
+}
+
+.social-guideline{
+  margin-top: 16px;
+  text-align: center;
+  color: #8a8a8a;
+}
+
+.hr-edge-weak {
+  border: 0;
+  padding-top: 1px;
+  background: linear-gradient(to right, transparent, #919194, transparent);
+}
+
+.social-icon-container{
+  text-align: center;
+  margin-top: 12px;
+}
+
+.iconfont{
+  margin-right: 16px;
+  margin-left: 16px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+
+.social-icon :hover{
+  opacity: 0.5;
+}
+.icon-qq{
+  background-image: url("../res/icon/QQ.png");
+  background-position: center;
+}
+.icon-weixin{
+  background-image: url("../res/icon/weixin.png");
+  background-position: center;
+}
+
+.icon-github{
+  background-image: url("../res/icon/github.png");
+  background-position: center;
+}
+
+.password-strength-hint{
+  color: coral;
+  float: right;
+  margin-right: 16px;
+}
+
+.register-card label{
+  padding-left: 4px;
+  color: #454444;
+}
+
+meter{
+ margin-left: 16px;
+}
+
+meter::-webkit-meter-bar{
+  width: 128px;
+  height: 8px;
+  background: rgba(255,255,255,0.6);
+}
+
+meter::-webkit-meter-even-less-good-value{
+  background: #ff7f50;
+}
+
+meter::-webkit-meter-suboptimum-value{
+  background: #ffb219;
+}
+
+meter::-webkit-meter-optimum-value{
+  background: #22c3a3;
+}
+
+.password-input-hint-container{
+  margin-left: 16px;
+  margin-right: 8px;
+  color: #797979;
+  /*padding: 6px;*/
+}
+
+.password-strength-container{
+  display: none;
+
+}

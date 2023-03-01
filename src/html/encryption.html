@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ENCRYPTION</title>
+  <link rel="stylesheet" href="../styles/encrypt_style.css">
+  <script src="../js/cryptostego.min.js"></script>
+</head>
+<body>
+
+<div class="pic-header">
+  <h1>ENCRYPTION</h1>
+  <hr class="hr-edge-weak">
+</div>
+
+<div>
+  <div class="menu">
+    <div class="menu-header">
+      <h1>Create Watermark</h1>
+    </div>
+    <form class="menu-form">
+
+      <div class="menu-item">
+        <input type="file" id="file" accept="image/*"/>
+      </div>
+
+      <div class="menu-item">
+        <h3>DCT watermark</h3>
+      </div>
+
+      <div class="menu-item">
+        <input type="button" id="submit" value="Select an image file" onclick="submitFile()">
+      </div>
+      <div class="menu-item">
+        <select id="select" name="level">
+          <option value="">Select a robustness level</option>
+          <option value="0">Robustness Level : 0</option>
+          <option value="1">Robustness Level : 1</option>
+          <option value="2">Robustness Level : 2</option>
+          <option value="3">Robustness Level : 3</option>
+          <option value="4">Robustness Level : 4</option>
+          <option value="5">Robustness Level : 5</option>
+        </select>
+      </div>
+      <div class="menu-item">
+        <input type="button" id="dct-encrypt" value="DCT Encryption" onclick="writeImg()">
+      </div>
+      <div class="menu-item">
+        <h3>SVG watermark</h3>
+      </div>
+      <div class="menu-item">
+        <input type="button" id="svg-encrypt" value="Show SVG Encryption" onclick="createSVGwatermark()">
+      </div>
+    </form>
+  </div>
+
+  <div class="watermark-container">
+    <div class="watermark-layer" ></div>
+    <div class="pic" id="pic">
+      <img id="img" src="../res/load.png">
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
+
+<script>
+  let svgText = "He Sijia 181250044"
+  let fontSize = 24
+  let svgWidth = fontSize * svgText.length
+  let svgHeight = svgWidth
+  let rotate = -45
+  let fill = 'white'
+  let isSvgWatermarkShow = false
+
+
+
+  function createSVGwatermark() {
+    if(!isSvgWatermarkShow){
+      let height = document.getElementById("img").height;
+      let width = document.getElementById("img").width;
+      console.log(height)
+      console.log(document.getElementById("img").clientHeight)
+      document.querySelector('.watermark-layer').style.height = height + 'px'
+      document.querySelector('.watermark-layer').style.width = width + 'px'
+
+      const svgStr = `<svg xmlns='http://www.w3.org/2000/svg' width='${svgWidth}px' height='${svgHeight}px'>
+                    <text  x='${fontSize}' y='0'
+                    fill-opacity='0.5' fill='${fill}'
+                    transform='translate(0,${svgHeight})rotate(${rotate})'
+                    font-size='${fontSize}'>
+                    ${svgText}
+                    </text>
+                    </svg>`
+
+      let watermarksvg = `url("data:image/svg+xml;base64,${window.btoa(unescape(encodeURIComponent(svgStr)))}")`
+
+      document.querySelector('.watermark-layer').style.backgroundImage = watermarksvg
+      isSvgWatermarkShow = true
+
+    }else{
+      isSvgWatermarkShow = false
+      document.querySelector('.watermark-layer').style.backgroundImage = ""
+    }
+
+  }
+
+
+  let file = document.getElementById("file")
+  let fileName = document.getElementById("submit")
+
+
+  file.addEventListener('change',onFileChange)
+
+
+  function submitFile(){
+    file.click()
+  }
+
+  function onFileChange(){
+    if(isSvgWatermarkShow){
+      isSvgWatermarkShow = false
+      document.querySelector('.watermark-layer').style.backgroundImage = ""
+    }
+    console.log(fileName.value)
+    fileName.value = file.files[0].name;
+    let imgFile = file.files[0]
+    let URL = window.URL || window.webkitURL
+    let imgUrl = URL.createObjectURL(imgFile)
+    img.setAttribute("src",imgUrl)
+
+  }
+
+  let msg = "181250044 He Sijia"
+  let password = ""
+  let img = document.getElementById("img")
+  let level = document.getElementById("select")
+
+  function writeImg(){
+
+    function writeFunc() {
+      console.log(level.value)
+      let r_value = level.value
+      let t = writeMsgToCanvas("myCanvas", msg, password,r_value)
+      if(t===true){
+        console.log("success")
+        let canvas = document.getElementById("myCanvas")
+        let image = canvas.toDataURL("image/png")
+        img.setAttribute("src",image)
+      }else{
+        console.log("fail")
+      }
+    }
+    loadIMGtoCanvas('file','myCanvas',writeFunc,500)
+  }
+</script>

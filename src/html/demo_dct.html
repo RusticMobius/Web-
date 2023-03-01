@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DEMO DCT</title>
+  <link rel="stylesheet" href="../styles/demo_dct_style.css">
+  <script src="../js/cryptostego.min.js"></script>
+</head>
+<body>
+
+<div class="pic-header">
+  <h1>Autumn Picture</h1>
+  <hr class="hr-edge-weak">
+</div>
+
+
+<div class="watermark-container">
+  <div class="watermark-layer" style="background-image: var(--watermarksvg);"></div>
+  <div class="pic">
+<!--    <canvas id="tCanvas" style="height:800px;width: 1200px;display: none"></canvas>-->
+<!--    <img id="tImg" src="../res/img/pexels-irina-iriser-1379640.jpg" >-->
+    <img id="img" src="" onload="createWaterMark()">
+  </div>
+</div>
+
+<div class="watermark-container">
+  <!--  <div class="watermark-layer" style="background-image: var(&#45;&#45;watermarksvg);"></div>-->
+  <div class="pic">
+    <canvas id="tCanvas" style="height:800px;width: 1200px;display: none"></canvas>
+    <img id="tImg" src="" >
+    <!--    <img id="img" src="../res/img/pexels-irina-iriser-1379640.jpg">-->
+  </div>
+</div>
+
+</body>
+
+<script>
+  let svgText = "He Sijia 181250044"
+  let fontSize = 24
+  let svgWidth = fontSize * svgText.length
+  let svgHeight = svgWidth
+  let rotate = -45
+  let fill = 'white'
+
+
+  let tImg = document.getElementById("tImg")
+  let img = document.getElementById("img")
+
+
+  window.onload = function (){
+    let imgSrc = getImgSrc()
+    img.setAttribute("src",imgSrc)
+
+  }
+
+  // img.remove()
+
+  function createWaterMark() {
+
+    createSVGmark()
+    DCT()
+
+  }
+
+  function createSVGmark(){
+    console.log("svg...")
+    let height = document.getElementById("img").height;
+    let width = document.getElementById("img").width;
+    console.log(height)
+    document.querySelector('.watermark-layer').style.height = height + 'px'
+    document.querySelector('.watermark-layer').style.width = width + 'px'
+
+    const svgStr = `<svg xmlns='http://www.w3.org/2000/svg' width='${svgWidth}px' height='${svgHeight}px'>
+                    <text  x='${fontSize}' y='0'
+                    fill-opacity='0.5' fill='${fill}'
+                    transform='translate(0,${svgHeight})rotate(${rotate})'
+                    font-size='${fontSize}'>
+                    ${svgText}
+                    </text>
+                    </svg>`
+
+    let watermarksvg = `url("data:image/svg+xml;base64,${window.btoa(unescape(encodeURIComponent(svgStr)))}")`
+
+    document.querySelector('.watermark-layer').style.setProperty('--watermarksvg', watermarksvg)
+
+  }
+
+  function DCT(){
+    let height = img.height
+    let width = img.width
+    const tc = document.getElementById("tCanvas")
+    document.getElementById("tCanvas").height = height
+    document.getElementById("tCanvas").width = width
+    const ctx = tc.getContext('2d')
+    console.log("loading Image")
+    ctx.drawImage(img,0,0,width,height)
+    let t = writeMsgToCanvas("tCanvas", "He Sijia 181250044", "",3)
+    if(t===true){
+      console.log("success")
+      let canvas = document.getElementById("tCanvas")
+      let image = canvas.toDataURL("image/png")
+      tImg.setAttribute("src",image)
+    }else{
+      console.log("fail")
+    }
+  }
+
+  function getImgSrc() {
+    let url = location.href
+    let temp = url.split("?")[1]
+    imgSrc = temp.split("=")[1]
+    console.log(imgSrc)
+    return imgSrc
+  }
+
+</script>

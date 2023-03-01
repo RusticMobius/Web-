@@ -1,0 +1,251 @@
+
+body{
+  font-family: sans-serif;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../res/background_autumn.jpg");
+  background-size: cover;
+  display: flex;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.social-icon-container{
+  text-align: center;
+  margin-top: 12px;
+}
+
+.iconfont{
+  margin-right: 16px;
+  margin-left: 16px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+
+.social-icon :hover{
+  opacity: 0.5;
+}
+.icon-qq{
+  background-image: url("../res/icon/QQ.png");
+  background-position: center;
+}
+.icon-weixin{
+  background-image: url("../res/icon/weixin.png");
+  background-position: center;
+}
+
+.icon-github{
+  background-image: url("../res/icon/github.png");
+  background-position: center;
+}
+
+.guide-line-header{
+  width: 350px;
+}
+.guide-line-header h1{
+  font-size: 3rem;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,.7);
+}
+.guide-line-header h2{
+  font-size: 2rem;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,.5);
+}
+.login-card-container{
+  margin-left: 15%;
+  align-self: center;
+}
+.login-card{
+  width: 450px;
+  height: 720px;
+  background: rgba(255, 255, 255,.4);
+  border-radius: 10px;
+  position: relative;
+}
+
+.login-card::before{
+  content: '';
+  position: absolute;
+  background:rgba(255, 255, 255,.15);
+  inset: 0;
+  transform: rotate(-6deg);
+  z-index: -1;
+}
+
+.login-card-header,
+.login-card-footer{
+  text-align: center;
+}
+
+.login-card a{
+  text-decoration: none;
+  color: #22c1c3;
+}
+
+.login-card a:hover{
+  text-decoration: underline;
+}
+
+.login-card-header{
+  padding-top: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.login-card-header h1{
+  font-size: 3rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: .5rem;
+}
+
+/*.login-card-header h1+div{*/
+/*  font-size: calc(1rem * .8);*/
+/*  opacity: .8;*/
+/*}*/
+
+.login-card-form{
+  display: flex;
+  flex-direction: column;
+  /*gap: 1.5rem;*/
+}
+
+.login-card-form .form-item{
+  position: relative;
+  align-self: center;
+}
+
+.login-card-form .form-item-other .checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+
+.login-card-form .form-item-other{
+  width: 345px;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  /*margin-bottom: 1.5rem;*/
+}
+
+.form-item input[type="password"],
+.form-item input[type="text"]{
+  display: flex;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,.3);
+  padding: 1rem 1rem;
+  border-radius: 100px;
+  width: 320px;
+  font-size: 1rem;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  color: #454444;
+}
+.form-item-other input[type="text"]{
+  display: flex;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,.3);
+  padding: 0.6rem 1rem;
+  text-align: center;
+  border-radius: 100px;
+  width: 120px;
+  font-size: 1rem;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  color: #454444;
+}
+.login-card input[type="password"],
+.login-card input[type="text"]:focus{
+  background: rgba(255,255,255,.8);
+}
+
+
+.login-card input[type="checkbox"]{
+  width: 16px;
+  height: 16px;
+  accent-color:#fdbb2d;
+}
+
+.login-card input[type="submit"]{
+
+  border: none;
+  outline: none;
+  background: #22c1c3;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  width: 360px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.login-card input[type="submit"]:hover{
+  background: #25ced0;
+}
+
+/*.form-item-other{*/
+/*  margin-right: 3rem;*/
+/*}*/
+
+.login-card button{
+  align-self: center;
+  background: #22c1c3;
+  color: white;
+  outline: none;
+  border: none;
+  padding: .8rem 1rem;
+  font-size: 1rem;
+  border-radius: 100px;
+  letter-spacing: 1px;
+  position: absolute;
+  width: 340px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.login-card button:hover{
+  background: #25ced0;
+}
+
+.login-card .login-card-footer{
+  margin-top: 8px;
+  margin-bottom: 16px;
+  color: #454444;
+}
+
+.login-card label{
+  padding-left: 4px;
+  color: #454444;
+}
+
+
+/*.login-card input:focus{*/
+/*  background: rgba(255,255,255,.8);*/
+/*}*/
+
+.social-guideline{
+  margin-top: 16px;
+  text-align: center;
+  color: #8a8a8a;
+}
+
+.hr-edge-weak {
+  border: 0;
+  padding-top: 1px;
+  background: linear-gradient(to right, transparent, #919194, transparent);
+}

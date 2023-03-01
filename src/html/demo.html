@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DEMO</title>
+  <link rel="stylesheet" href="../styles/demo_style.css">
+  <script src="../js/cryptostego.min.js"></script>
+
+</head>
+<body>
+
+<div class="header-card">
+  <div id="link-theme">
+    <a href="http://localhost:3003/html/gallery.html">
+      <h2>Picture Gallery</h2>
+    </a>
+  </div>
+
+  <div id="link-login">
+    <h2 id="header-account-text">Vistor |</h2>
+    <a onclick="logOut()" >
+      <h2 id="log-opt">Log Out</h2>
+    </a>
+  </div>
+
+  <div class="pic-header">
+    <h1>Autumn Picture</h1>
+  </div>
+
+</div>
+
+<div>
+  <div class="menu">
+    <div class="menu-header">
+      <h1>Stylized Tool</h1>
+    </div>
+    <form class="menu-form">
+
+      <div class="menu-item">
+        <input type="file" id="file" accept="image/*"/>
+      </div>
+
+<!--      <div class="menu-item">-->
+<!--        <h3>DCT watermark</h3>-->
+<!--      </div>-->
+
+      <div class="menu-item">
+        <input type="button" id="submit" value="Select an image file" onclick="submitFile()">
+      </div>
+      <div class="menu-item">
+        <select id="select-style-img">
+          <option value="" disabled>Select a style</option>
+          <option value="file">Select from file</option>
+          <option value="random">Random image from wikiart.org</option>
+          <option value="udnie">udnie</option>
+          <option value="stripes">stripes</option>
+          <option value="bricks">bricks</option>
+          <option value="clouds">clouds</option>
+          <option value="towers">towers</option>
+          <option value="sketch">sketch</option>
+          <option value="seaport" selected="selected">seaport</option>
+          <option value="red_circles">red_circles</option>
+          <option value="zigzag">zigzag</option>
+        </select>
+      </div>
+
+      <div class="menu-item">
+        <input type="button" id="svg-encrypt" value="Stylize" onclick="createSVGwatermark()">
+      </div>
+    </form>
+  </div>
+
+  <div class="pic-container">
+    <h2>Original Picture</h2>
+    <div class="watermark-container">
+          <div class="watermark-layer" style="background-image: var(--watermarksvg);"></div>
+      <div class="pic">
+        <img id="img" src="" onload="createSVGmark()">
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pic-container">
+    <h2>Stylized Picture</h2>
+    <div class="watermark-container">
+          <div class="watermark-layer" style="background-image: var(--watermarksvg);"></div>
+      <div class="pic">
+        <canvas id="hiddenCanvas" style="height:800px;width: 1200px;display: none"></canvas>
+        <img id="tImg" src="../res/img/pexels-irina-iriser-1379640.jpg">
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="../js/admin.js"></script>
+
+<script type="module" src="../../transformer.js"></script>
+<script>
+
+  let svgText = "He Sijia 181250044"
+  let fontSize = 24
+  let svgWidth = fontSize * svgText.length
+  let svgHeight = svgWidth
+  let rotate = -45
+  let fill = 'white'
+
+
+  let tImg = document.getElementById("tImg")
+  let img = document.getElementById("img")
+
+  window.onload = function (){
+    // let imgSrc = getImgSrc()
+    let imgSrc = '../res/img/pexels-jasmin-chew-5635233.jpg'
+    img.setAttribute("src",imgSrc)
+
+  }
+  function createSVGmark(){
+    console.log("svg...")
+    let height = document.getElementById("img").height;
+    console.log(height)
+    document.querySelector('.watermark-layer').style.height = height + 'px'
+
+    const svgStr = `<svg xmlns='http://www.w3.org/2000/svg' width='${svgWidth}px' height='${svgHeight}px'>
+                    <text  x='${fontSize}' y='0'
+                    fill-opacity='0.5' fill='${fill}'
+                    transform='translate(0,${svgHeight})rotate(${rotate})'
+                    font-size='${fontSize}'>
+                    ${svgText}
+                    </text>
+                    </svg>`
+
+    let watermarksvg = `url("data:image/svg+xml;base64,${window.btoa(unescape(encodeURIComponent(svgStr)))}")`
+
+    document.querySelector('.watermark-layer').style.setProperty('--watermarksvg', watermarksvg)
+
+  }
+
+  function getImgSrc() {
+    let url = location.href
+    let temp = url.split("?")[1]
+    imgSrc = temp.split("=")[1]
+    console.log(imgSrc)
+    return imgSrc
+  }
+</script>
+
+</html>
